@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <title>Flatscreen for YouTube embeds</title>
+
+        <link rel="stylesheet" type="text/css" media="all" href="flatscreen.css" />
+
+        <link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,600|Source+Code+Pro:400' />
+
+        <!--
+            Modernizr
+            =========
+            Required tests:
+             - CSS animations
+        -->
+        <script src="js/modernizr.min.js"></script>
+
+        <style>
+            /* All styles here are for the page - and aren't part of flatscreen */
+
+            html {
+                background-color: #EBEBD8;
+            }
+            body {
+                background: #fff;
+                font: normal 1em/1.4 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                margin: 1em;
+                padding: 0.01em 1em;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: normal;
+            }
+
+            h1, h2 {
+                border-bottom: 1px solid #B8DB9B;
+            }
+
+            h1 + p b {
+                font-size: 1.25em;
+            }
+
+            pre {
+                border-bottom: 0.5em solid #e0e0e0;
+                border-top: 0.5em solid #e0e0e0;
+                background: #e0e0e0;
+                background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ5JSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);;
+                background-image: -moz-linear-gradient(top,  rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.5) 51%); /* FF3.6+ */
+                background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255, 255, 255, 0)), color-stop(50%,rgba(255, 255, 255, 0)), color-stop(51%,rgba(0,0,0,0.5))); /* Chrome,Safari4+ */
+                background-image: -webkit-linear-gradient(top,  rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0) 50%,rgba(0,0,0,0.5) 51%); /* Chrome10+,Safari5.1+ */
+                background-image: -o-linear-gradient(top,  rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0) 50%,rgba(0,0,0,0.5) 51%); /* Opera 11.10+ */
+                background-image: -ms-linear-gradient(top,  rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0) 50%,rgba(0,0,0,0.5) 51%); /* IE10+ */
+                background-image: linear-gradient(to bottom,  rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0) 50%,rgba(255, 255, 255, 0.5) 50%); /* W3C */
+
+
+                    -moz-background-size: 2.8em 2.8em;
+                    -webkit-background-size: 2.8em 2.8em;
+                    -o-background-size: 2.8em 2.8em;
+                background-size: 2.8em 2.8em;
+                padding: 0 1em;
+            }
+            pre,
+            code {
+                color: #007932;
+                font: 400 1em/1.4 'Source Code Pro', Consolas, monospace;
+            }
+
+            code span {
+                color: grey;
+            }
+            code span a {
+                color: grey;
+            }
+
+            .cf:before,
+            .cf:after {
+                content: " ";
+                display: table;
+            }
+            .cf:after {
+                clear: both;
+            }
+            .cf {
+                *zoom: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Flatscreen</h1>
+        <p><b>A lighter, flatter way of embedding YouTube videos.</b></p>
+
+        <p>Flatscreen only loads the YouTube <code>iframe</code> once a visitor has clicked on the thumbnail, speeding up the page's inital load time. Good for single or multiple videos on the same page. Complexity is taken care of, with only the height and/or width of the video needed.</p>
+
+        <h2>Demo</h2>
+        <section class="cf">
+            <div class="flatscreen" id="lkdvzIheuJ8"></div>
+
+            <div class="flatscreen" id="FpS8oLLy51Q"></div>
+
+            <div class="flatscreen" id="GaAgtwbZV_E"></div>
+        </section>
+
+        <h2>You will also need</h2>
+        <ul>
+            <li><a href="http://modernizr.com">Modernzir</a> - with the CSS animations test.</li>
+            <li>(Optional) <a href="http://lesscss.org/">LESS</a> - to compile the <code>flatscreen.less</code> to <code>flatscreen.css</code></li>
+        </ul>
+
+        <h2>How to use</h2>
+        <p>Include the minified flatscreen.js just before the <code>&lt;/body&gt;</code> tag.</p>
+        <pre><code>&lt;script src="flatscreen.min.js"&gt;&lt;/script&gt;</code>.</pre>
+        <p>After the flatscreen.js script tag, add (without the comments):</p>
+<pre class="language-javascript"><code>&lt;script&gt; //&lt;![CDATA[
+    (function(){
+
+        <span>// The dimensions of the video.
+        // ---------------------------------------------------------
+        // Only width or height needed if 16:9 ratio; otherwise
+        // define both width and height for other ratios</span>
+        var screenSize = {
+                width: 400
+            },
+
+        <span>// See YouTube JS API to see what can be styled.
+        // <a href="https://developers.google.com/youtube/player_parameters#Parameters">https://developers.google.com/youtube/player_parameters#Parameters</a>
+        // ---------------------------------------------------------
+        //  * Autoplay will always be turned on to avoid the need to
+        //    click twice. If you set autoplay here, it will be
+        //    overridden.
+        //  * Related videos are also turned off.</span>
+            youtubeParameters = {
+                color: 'white',
+                disablekb: 1,
+                showinfo : 0,
+                theme: 'light'
+            };
+
+        <span>// Now we can start flatscreen, passing over the two variables</span>
+        runFlatscreen(
+            screenSize,
+            youtubeParameters
+        );
+
+    })();
+//]]&gt; &lt;/script&gt;</code></pre>
+        <p>Add an element with the class of <code>flatscreen</code> and the YouTube ID in the <code>id</code>, and everything (should be) taken care of.</p>
+        <pre><code>&lt;div class="flatscreen" id="GaAgtwbZV_E"&gt;&lt;/div&gt;</code></pre>
+
+        <h2>To do</h2>
+        <ul>
+            <li><strike>Figure out why it doesn't work in Internet Explorer 8</strike></li>
+            <li>Loading thumbnails suited for the video size - larger thumbnails get larger images</li>
+            <li>Add in a check to see if the YouTube JavaScript has already been loaded</li>
+            <li>Firing a Google Analytics events on thumbnail click, video load, video play, video pause, etc</li>
+        </ul>
+
+        <h2>Tested in:</h2>
+        <h3>Level 1 browsers</h3>
+        <p>Fully supported. Slight variations in look and feel between browsers allowed.</p>
+        <ul>
+            <li>Windows 7 / Internet Explorer 9</li>
+            <li>Windows 7 / Internet Explorer 8 (emulated)</li>
+            <li>Windows 7 / Firefox 30</li>
+            <li>Windows 7 / Chrome 33</li>
+            <li>Windows XP / Internet Explorer 8</li>
+        </ul>
+
+        <h3>Level 2 browsers</h3>
+        <p>Viewable, navigatable, functional. Presentation is allowed to degrade to a noticable level, but not to the extent of reducing functionality.</p>
+        <ul>
+            <li>Windows 7 / Internet Explorer 7 (emulated)</li>
+            <li>Windows XP / Internet Explorer 7</li>
+        </ul>
+
+        <!--
+            Include flatscreen.js, but it doesn't run automatically as we want to
+            pass it some dimensions and styles etc
+        -------------------------------------------------------------------- -->
+        <script src="flatscreen.min.js"></script>
+        <script>
+        //<![CDATA[
+            (function(){
+               var screenSize = {
+                   // The dimensions of the video.
+                   // Only width or height needed if 16:9 ratio; otherwise
+                   // define both width and height for other ratios
+                        width : Math.floor( document.getElementsByTagName('h1')[0].clientWidth / 3 )
+                    },
+                    youtubeParameters = {
+                    // See YouTube JS API to see what can be styled.
+                    // https://developers.google.com/youtube/player_parameters#Parameters
+                    // ---------------------------------------------------------
+                    //  - Autoplay will always be turned on to avoid the need to
+                    // click twice. If you set it here, it will be overwritten.
+                    //  - Related videos are also turned off.
+                        color: 'white',
+                        disablekb: 1,
+                        showinfo : 0,
+                        theme: 'light'
+                    };
+
+                console.log(screenSize.width + ' ; ' + screenSize.height)
+
+                // Now we can runFlatscreen, passing over the two variables
+                runFlatscreen(
+                    screenSize,
+                    youtubeParameters
+                );
+
+            })();
+        //]]>
+        </script>
+    </body>
+</html>

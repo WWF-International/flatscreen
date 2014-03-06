@@ -1,0 +1,181 @@
+// -----------------------------------------------------------------------------
+// include these near the start - they shouldn't appear in the processed CSS.
+// -----------------------------------------------------------------------------
+@import 'style/variables-and-mixins.less';
+
+// -----------------------------------------------------------------------------
+// Styles specific to flatscreen
+// -----------------------------------------------------------------------------
+.flatscreen {
+    float: left;
+    position: relative;
+    z-index: 100;
+
+    img {
+        position: relative;
+        z-index: 1000;
+    }
+
+    &.fr {
+        float: right;
+    }
+}
+
+.thumb {
+    position: relative;
+    z-index: 1000;
+}
+
+.invisible-button {
+    bottom: 0;
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+
+    img {
+        position: relative;
+        z-index: -1;
+    }
+
+    &:after,
+    &:before {
+        content: '';
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        z-index: 1500;
+        .transition( all 100ms ease-in-out );
+    }
+
+    &:before {
+        background: @black;
+        background: fade(@black, 75);
+        .border-radius(1em);
+        .box-sizing(border-box);
+        font-size: 4em; /* change this to change everything else */
+        margin: -0.5em 0 0 -0.5em;
+        height: 1em;
+        width: 1em;
+    }
+
+    &:after {
+        border-style: solid;
+        border-color: transparent transparent transparent @grey-light;
+        border-color: transparent transparent transparent fade(@white, 75);
+        border-width: 1em 0 1em 1.732em; /* equilateral triangle ratios */
+        margin: -1em 0 0 -0.55em;
+        height: 0;
+        width: 0;
+    }
+
+    &:hover {
+
+        &:before {
+            background: fade(@green-medium, 99);
+        }
+
+        &:after {
+        border-color: transparent transparent transparent #fff;
+        }
+    }
+}
+
+.loading-screen {
+    overflow: hidden;
+    position: absolute;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    .animation(spin 1s steps(8, end) infinite);
+    .background-size(contain);
+    font-size: 0.9em;
+    height: 2em;
+    left: 50%;
+    margin: -1.25em 0 0 -1em;
+    position: absolute;
+    top: 50%;
+    width: 2em;
+    z-index: 2500;
+
+    .circles {
+        height: 2em;
+        position: absolute;
+        top: 0;
+        .transform( rotate(45deg) );
+        width: 2em;
+
+        &:after {
+            .border-radius(0.5em);
+            background-color: @darkgrey;
+            content: '';
+            height: 0.5em;
+            left: 50%;
+            margin: 0 0 0 -0.25em;
+            width: 0.5em;
+            position: absolute;
+            top: 0;
+        }
+
+        // a loop for creating nth-child(x)
+        .nth-child-loop(@i) when (@i > 0) {
+
+            &:nth-child(@{i}) {
+                .transform( rotate( (45deg * @i) ) );
+            }
+
+            &:nth-child(@{i}):after {
+               background-color: lighten(@darkergrey, ( @i * 10) );
+
+            }
+
+            .nth-child-loop(@i - 1);
+        }
+
+        // number of circles in the loading spinner
+        @circles: 8;
+        // use the mixin with the number of circles
+        .nth-child-loop(@circles);
+
+    }
+}
+
+.spin-keyframes {
+    0% {
+        .transform( rotate(0deg) );
+    }
+
+    100% {
+        .transform( rotate(360deg) ;)
+    }
+}
+
+    @-moz-keyframes spin {
+        .spin-keyframes;
+    }
+    @-ms-keyframes spin {
+        .spin-keyframes;
+    }
+    @-o-keyframes spin {
+        .spin-keyframes;
+    }
+    @-webkit-keyframes spin {
+        .spin-keyframes;
+    }
+@keyframes spin {
+    .spin-keyframes;
+}
+
+.no-cssanimations {
+    .loading-spinner {
+       background: transparent url('images/spinner.gif') no-repeat 50% 50%;
+    }
+    .circles {
+        display: none;
+    }
+}
