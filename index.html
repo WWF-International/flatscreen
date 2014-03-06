@@ -43,7 +43,6 @@
             }
 
             pre {
-                border-bottom: 0.5em solid #e0e0e0;
                 border-top: 0.5em solid #e0e0e0;
                 background: #e0e0e0;
                 background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ5JSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);;
@@ -63,8 +62,23 @@
             }
             pre,
             code {
+                border-radius: 0.25em;
                 color: #007932;
                 font: 400 1em/1.4 'Source Code Pro', Consolas, monospace;
+            }
+
+            pre {
+                overflow-x: scroll;
+            }
+
+            code {
+                background: #eee;
+                padding: 0 0.25em;
+            }
+
+            pre code {
+                background: none;
+                border: none;
             }
 
             code span {
@@ -97,9 +111,11 @@
         <section class="cf">
             <div class="flatscreen" id="lkdvzIheuJ8"></div>
 
-            <div class="flatscreen" id="FpS8oLLy51Q"></div>
+            <div class="flatscreen" id="ja88JM3cfmQ"></div>
 
             <div class="flatscreen" id="GaAgtwbZV_E"></div>
+
+            <div class="flatscreen" id="jju_uM1cqZ8"></div>
         </section>
 
         <h2>You will also need</h2>
@@ -117,8 +133,8 @@
 
         <span>// The dimensions of the video.
         // ---------------------------------------------------------
-        // Only width or height needed if 16:9 ratio; otherwise
-        // define both width and height for other ratios</span>
+        // Only width or height needed if 16:9 ratio; other ratios
+        // need both the width and height defined</span>
         var screenSize = {
                 width: 400
             },
@@ -137,7 +153,7 @@
                 theme: 'light'
             };
 
-        <span>// Now we can start flatscreen, passing over the two variables</span>
+        <span>// Now we can start flatscreen, passing over the two objects</span>
         runFlatscreen(
             screenSize,
             youtubeParameters
@@ -173,42 +189,22 @@
             <li>Windows 7 / Internet Explorer 7 (emulated)</li>
             <li>Windows XP / Internet Explorer 7</li>
         </ul>
-
-        <!--
-            Include flatscreen.js, but it doesn't run automatically as we want to
-            pass it some dimensions and styles etc
-        -------------------------------------------------------------------- -->
         <script src="flatscreen.min.js"></script>
         <script>
         //<![CDATA[
             (function(){
                var screenSize = {
-                   // The dimensions of the video.
-                   // Only width or height needed if 16:9 ratio; otherwise
-                   // define both width and height for other ratios
-                        width : Math.floor( document.getElementsByTagName('h1')[0].clientWidth / 3 )
+                        width : Math.floor( document.getElementsByTagName('h1')[0].clientWidth / 2 )
                     },
                     youtubeParameters = {
-                    // See YouTube JS API to see what can be styled.
-                    // https://developers.google.com/youtube/player_parameters#Parameters
-                    // ---------------------------------------------------------
-                    //  - Autoplay will always be turned on to avoid the need to
-                    // click twice. If you set it here, it will be overwritten.
-                    //  - Related videos are also turned off.
-                        color: 'white',
                         disablekb: 1,
                         showinfo : 0,
                         theme: 'light'
                     };
-
-                console.log(screenSize.width + ' ; ' + screenSize.height)
-
-                // Now we can runFlatscreen, passing over the two variables
                 runFlatscreen(
                     screenSize,
                     youtubeParameters
                 );
-
             })();
         //]]>
         </script>
