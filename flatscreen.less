@@ -7,48 +7,53 @@
 // Styles specific to flatscreen
 // -----------------------------------------------------------------------------
 .flatscreen {
+    @width: 25%;
+
     float: left;
+    height: 0;
+    overflow: hidden;
+    padding: ((@width / 16) * 9) 0 1px 0;
     position: relative;
+    width: @width;
     z-index: 100;
 
     img {
-        float: left;
-        position: relative;
-        z-index: 1000;
+        height: 100%;
+        width: 100%;
     }
+}
 
-    &.fr {
-        float: right;
-    }
+.invisible-button,
+.flatscreen-wrapper,
+.loading-screen {
+    bottom: 0;
+    .box-sizing(border-box);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
 }
 
 .thumb {
-    position: relative;
-    z-index: 1000;
+    z-index: 1500;
 }
 
 .invisible-button {
-    bottom: 0;
     cursor: pointer;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
     z-index: 2000;
 
     img {
+        position: relative;
         z-index: -1;
     }
 
     &:after,
     &:before {
-        content: '';
+        content: ' ';
         left: 50%;
         position: absolute;
         top: 50%;
-        z-index: 1500;
+        z-index: 2500 !important;
         .transition( all 100ms ease-in-out );
     }
 
@@ -76,7 +81,7 @@
     &:hover {
 
         &:before {
-            background: fade(@green-medium, 99);
+            background: fade(@black, 99);
         }
 
         &:after {
@@ -86,6 +91,7 @@
 }
 
 .loading-screen {
+    display: none;
     overflow: hidden;
     position: absolute;
     z-index: 1000;

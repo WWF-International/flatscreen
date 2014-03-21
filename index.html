@@ -5,9 +5,26 @@
 
         <title>Flatscreen for YouTube embeds</title>
 
+        <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+
+        _gaq.push(['_setAccount', 'UA-43193766-6']);
+        _gaq.push(['_setDomainName', 'none']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+        </script>
+
         <link rel="stylesheet" type="text/css" media="all" href="flatscreen.css" />
 
-        <link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,600|Source+Code+Pro:400' />
+        <link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600|Source+Code+Pro:400' />
 
         <!--
             Modernizr
@@ -40,6 +57,22 @@
 
             h1 + p b {
                 font-size: 1.25em;
+            }
+
+            sup {
+                position: absolute;
+            }
+
+            dl {
+                padding-left: 2em;
+            }
+
+            dt {
+                font-weight: bold;
+            }
+
+            dd {
+                padding-bottom: 1em;
             }
 
             pre {
@@ -103,25 +136,22 @@
     </head>
     <body>
         <h1>Flatscreen</h1>
-        <p><b>A lighter, flatter way of embedding YouTube videos.</b></p>
+        <p><b>A lighter, flatter, and responsive way of embedding YouTube videos.</b></p>
 
-        <p>Flatscreen only loads the YouTube <code>iframe</code> once a visitor has clicked on the thumbnail, speeding up the page's inital load time. Good for single or multiple videos on the same page. Complexity is taken care of, with only the height and/or width of the video needed.</p>
+        <p>Flatscreen only loads the YouTube <code>iframe</code> once a visitor has clicked on the thumbnail, speeding up the page's inital load time. Good for single or multiple videos on the same page.</p>
 
         <h2>Demo</h2>
         <section class="cf">
             <div class="flatscreen" id="lkdvzIheuJ8"></div>
-
             <div class="flatscreen" id="ja88JM3cfmQ"></div>
-
             <div class="flatscreen" id="GaAgtwbZV_E"></div>
-
             <div class="flatscreen" id="jju_uM1cqZ8"></div>
         </section>
 
         <h2>You will also need</h2>
         <ul>
-            <li><a href="http://modernizr.com">Modernzir</a> - with the CSS animations test.</li>
-            <li>(Optional) <a href="http://lesscss.org/">LESS</a> - to compile the <code>flatscreen.less</code> to <code>flatscreen.css</code></li>
+            <li><a href="http://modernizr.com">Modernizr</a> - with the CSS animations test.</li>
+            <li><a href="http://lesscss.org/">LESS</a> - to compile the <code>flatscreen.less</code> to <code>flatscreen.css</code></li>
         </ul>
 
         <h2>How to use</h2>
@@ -130,14 +160,6 @@
         <p>After the flatscreen.js script tag, add (without the comments):</p>
 <pre class="language-javascript"><code>&lt;script&gt; //&lt;![CDATA[
     (function(){
-
-        <span>// The dimensions of the video.
-        // ---------------------------------------------------------
-        // Only width or height needed if 16:9 ratio; other ratios
-        // need both the width and height defined</span>
-        var screenSize = {
-                width: 400
-            },
 
         <span>// See YouTube JS API to see what can be styled.
         // <a href="https://developers.google.com/youtube/player_parameters#Parameters">https://developers.google.com/youtube/player_parameters#Parameters</a>
@@ -151,12 +173,18 @@
                 disablekb: 1,
                 showinfo : 0,
                 theme: 'light'
-            };
+            },
+        <span>
+        // Enable Google Analytics events tracking
+        // ---------------------------------------------------------
+        // If you want to track loads, clicks, pauses etc, then
+        // set this to true.</span>
+            gaEvents = false;
 
-        <span>// Now we can start flatscreen, passing over the two objects</span>
+        <span>// Now we can start flatscreen, passing over the objects</span>
         runFlatscreen(
-            screenSize,
-            youtubeParameters
+            youtubeParameters,
+            gaEvents
         );
 
     })();
@@ -164,12 +192,40 @@
         <p>Add an element with the class of <code>flatscreen</code> and the YouTube ID in the <code>id</code>, and everything (should be) taken care of.</p>
         <pre><code>&lt;div class="flatscreen" id="GaAgtwbZV_E"&gt;&lt;/div&gt;</code></pre>
 
+        <h2>Google Analytics event tracking</h2>
+
+        <p>This requires Google Analytics to be separately included before <code>runFlatscreen()</code> on the page. If GA isn't included and <code>gaEvents</code> is set to true, it won't break - it just won't track anything.</p>
+
+        <p>The event that is fired is:</p>
+            <dl>
+                <dt>Category</dt>
+                <dd>Videos</dd>
+
+                <dt>Event actions</dt>
+                <dd>One of the following:
+                    <ul>
+                        <li><i>ready for playback</i> - flatscreen.js has run successfully and is ready</li>
+                        <li><i>thumbnail triggered</i> - the thumbnail has been clicked</li>
+                        <li><i>unstarted</i> - video has loaded and is waiting to play; this shouldn't be seen, as flatscreen.js automatically start the video</li>
+                        <li><i>playing</i> - the video has started playing</li>
+                        <li><i>paused</i> - the video has been paused</li>
+                        <li><i>buffering</i> - the video is buffering</li>
+                        <li><i>ended</i> - the video has ended</li>
+                    </ul>
+                </dd>
+
+                <dt>    Event Label</dt>
+                <dd>YouTube ID: XXXXXXXXXXX</dd>
+            </dl>
+
+        <!-- https://developers.google.com/youtube/iframe_api_reference#Events -->
+
         <h2>To do</h2>
         <ul>
             <li><strike>Figure out why it doesn't work in Internet Explorer 8</strike></li>
             <li>Loading thumbnails suited for the video size - larger thumbnails get larger images</li>
             <li>Add in a check to see if the YouTube JavaScript has already been loaded</li>
-            <li>Firing a Google Analytics events on thumbnail click, video load, video play, video pause, etc</li>
+            <li><strike>Firing a Google Analytics events on thumbnail click, video load, video play, video pause, etc</strike></li>
         </ul>
 
         <h2>Tested in:</h2>
@@ -186,24 +242,22 @@
         <h3>Level 2 browsers</h3>
         <p>Viewable, navigatable, functional. Presentation is allowed to degrade to a noticable level, but not to the extent of reducing functionality.</p>
         <ul>
-            <li>Windows 7 / Internet Explorer 7 (emulated)</li>
-            <li>Windows XP / Internet Explorer 7</li>
+            <li><strike>Windows 7 / Internet Explorer 7 (emulated)</strike></li>
+            <li><strike>Windows XP / Internet Explorer 7</strike></li>
         </ul>
         <script src="flatscreen.min.js"></script>
         <script>
         //<![CDATA[
             (function(){
-               var screenSize = {
-                        width : Math.floor( document.getElementsByTagName('h1')[0].clientWidth / 2 )
-                    },
-                    youtubeParameters = {
+               var youtubeParameters = {
                         disablekb: 1,
                         showinfo : 0,
                         theme: 'light'
-                    };
+                    },
+                    gaEvents = true;
                 runFlatscreen(
-                    screenSize,
-                    youtubeParameters
+                    youtubeParameters,
+                    gaEvents
                 );
             })();
         //]]>
