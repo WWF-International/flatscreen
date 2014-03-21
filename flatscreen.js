@@ -155,6 +155,12 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
             }
         }
 
+        // Need to check if there are actually any .flatscreen elements. If not,
+        // then this will stop flatscreen.js from going any further.
+        if ( screens == 0 || screens === undefined || screens === null ) {
+            return false;
+        }
+
         // console.log(screens);
 
         for (var i = screens.length - 1; i >= 0; i--) {
