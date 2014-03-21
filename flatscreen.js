@@ -128,7 +128,7 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
     // Pass these details over to the createThumbnail function
     //
     function findYTelements() {
-        console.log('findYTelements');
+        // console.log('findYTelements');
         var screens = '';
 
         if ( document.getElementsByClassName ) {
@@ -155,7 +155,7 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
             }
         }
 
-        console.log(screens);
+        // console.log(screens);
 
         for (var i = screens.length - 1; i >= 0; i--) {
             var ytID = screens[i].id,
@@ -164,7 +164,7 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
             if ( thumbnailDirectory === undefined || thumbnailDirectory == ' ' || thumbnailDirectory === null || isObjectEmpty(thumbnailDirectory) == true ) {
                 var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/maxresdefault.jpg" /></div>',
                 loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/maxresdefault.jpg" /></div>';
-                console.log(screens[i].id);
+                // console.log(screens[i].id);
             }
 
             else {
@@ -186,7 +186,7 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
     // embed the video. (Can be swapped in for something else.)
     //
     function createThumbnail(target, wrapper, invisibleButton, loadingScreen) {
-        console.log('createThumbnail');
+        // console.log('createThumbnail');
 
         // Get the target element specific to this YouTube video - and no other
         // Then add the thumbnail and invisible button into the target element.
@@ -195,12 +195,12 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
         // Add a listener to the invisible button to fire the function when it's
         // clicked. Different modes of listening required for IE.
         var elInvisibleButton = document.getElementById(target + '-invisible-button');
-        console.log(elInvisibleButton);
+        // console.log(elInvisibleButton);
 
         if ( elInvisibleButton.addEventListener ) {
             elInvisibleButton.addEventListener('click', function(){
                 createLoadingScreen(target);
-                console.log('addEventListener fired');
+                // console.log('addEventListener fired');
             });
         }
         else if ( elInvisibleButton.attachEvent ) {
@@ -229,7 +229,7 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
             gaEvent('thumbnail triggered', ytID);
         };
 
-        console.log('createLoadingScreen');
+        // console.log('createLoadingScreen');
         removeables = [ ytID + '-invisible-button' ];
         removeElement( removeables );
 
@@ -239,7 +239,7 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
     }
 
     function youtubePlayer(ytID) {
-        console.log('youtubePlayer');
+        // console.log('youtubePlayer');
 
         player = new YT.Player(ytID + '-wrapper', {
             height: '100%',
@@ -251,13 +251,13 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
                 'onStateChange' : stateChange
             }
         });
-        console.log(player);
-        console.log(ytID + '-wrapper');
+        // console.log(player);
+        // console.log(ytID + '-wrapper');
     }
 
 
     function steadyGo(event) {
-        console.log('steadyGo');
+        // console.log('steadyGo');
         // get the YouTube ID from ID-wrapper event passed over
         var ytID = event.target.a.id.match( '(.{11})(?:-wrapper)' )[1],
             removeables = [ ytID + '-loading' ];
@@ -270,7 +270,7 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
     }
 
     function stateChange(event) {
-        console.log('stateChange');
+        // console.log('stateChange');
         if ( gaEvents === true ) {
             var ytID = event.target.a.id.match( '(.{11})(?:-wrapper)' )[1];
 
