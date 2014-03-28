@@ -1,4 +1,4 @@
-function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
+function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
     var ytTag = document.createElement('script'),
         firstScriptTag = document.getElementsByTagName('script')[0],
@@ -167,17 +167,23 @@ function runFlatscreen(youtubeParameters, gaEvents, thumbnailDirectory){
             var ytID = screens[i].id,
                 wrapper = '<div id="' + ytID + '-wrapper" class="flatscreen-wrapper"></div>';
 
-            if ( thumbnailDirectory === undefined || thumbnailDirectory == ' ' || thumbnailDirectory === null || isObjectEmpty(thumbnailDirectory) == true ) {
+            // If the thumbnails have been set, the use them
+            // -----------------------------------------------------------------
+            if ( alternativeThumbnails[ytID] !== undefined ) {
+                // console.log('alternative thumbnail - ' + alternativeThumbnails[ytID]);
+
+                var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="' + alternativeThumbnails[ytID] + '" /></div>',
+                loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="' + alternativeThumbnails[ytID] + '" /></div>';
+                // console.log(screens[i].id);
+            }
+
+            //
+            // -----------------------------------------------------------------
+            else {
                 var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/maxresdefault.jpg" /></div>',
                 loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/maxresdefault.jpg" /></div>';
                 // console.log(screens[i].id);
             }
-
-            else {
-                var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="' +thumbnailDirectory + '/' + ytID + '.jpg" /></div>',
-                loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="' + thumbnailDirectory + '/' + ytID + '.jpg" /></div>';
-            }
-
 
             createThumbnail(ytID, wrapper, invisibleButton, loadingScreen);
         }

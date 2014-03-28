@@ -145,7 +145,7 @@
             <div class="flatscreen" id="lkdvzIheuJ8"></div>
             <div class="flatscreen" id="ja88JM3cfmQ"></div>
             <div class="flatscreen" id="GaAgtwbZV_E"></div>
-            <div class="flatscreen" id="jju_uM1cqZ8"></div>
+            <div class="flatscreen" id="dQw4w9WgXcQ"></div>
         </section>
 
         <h2>You will also need</h2>
@@ -170,21 +170,33 @@
         //  * Related videos are also turned off.</span>
             youtubeParameters = {
                 color: 'white',
-                disablekb: 1,
                 showinfo : 0,
-                theme: 'light'
+                theme: 'light' <span>// etc</span>
             },
         <span>
         // Enable Google Analytics events tracking
         // ---------------------------------------------------------
         // If you want to track loads, clicks, pauses etc, then
         // set this to true.</span>
-            gaEvents = false;
+            gaEvents = false,
+
+        <span>
+        // Alternative thumbnails
+        // ---------------------------------------------------------
+        // List of alternative thumbnails for each video - you can
+        // set the thumbnails for all or just one of the videos.
+        // Syntax within the object is:
+        //      'YOUTUBE_ID' : '/image-url-goes-here.jpg'</span>
+            alternativeThumbnails = {
+                'GaAgtwbZV_E' : 'alternative-thumbnail.jpg',
+                'dQw4w9WgXcQ' : 'alternative-thumbnail.jpg'
+            };
 
         <span>// Now we can start flatscreen, passing over the objects</span>
         runFlatscreen(
             youtubeParameters,
-            gaEvents
+            gaEvents,
+            alternativeThumbnails
         );
 
     })();
@@ -222,10 +234,12 @@
 
         <h2>To do</h2>
         <ul>
-            <li><strike>Figure out why it doesn't work in Internet Explorer 8</strike></li>
             <li>Loading thumbnails suited for the video size - larger thumbnails get larger images</li>
             <li>Add in a check to see if the YouTube JavaScript has already been loaded</li>
+            <li><strike>Figure out why it doesn't work in Internet Explorer 8</strike></li>
             <li><strike>Firing a Google Analytics events on thumbnail click, video load, video play, video pause, etc</strike></li>
+            <li><strike>Custom thumbnails can be set for each video individually.</strike></li>
+            <li>Figure out why it doesn't work in Internet Explorer 7(?)</li>
         </ul>
 
         <h2>Tested in:</h2>
@@ -254,10 +268,15 @@
                         showinfo : 0,
                         theme: 'light'
                     },
-                    gaEvents = true;
+                    gaEvents = true,
+                    alternativeThumbnails = {
+                        'dQw4w9WgXcQ' : '//i1.ytimg.com/vi/aZugHoh6VRI/mqdefault.jpg' // nothing to see here. Move on.
+                    };
+
                 runFlatscreen(
                     youtubeParameters,
-                    gaEvents
+                    gaEvents,
+                    alternativeThumbnails
                 );
             })();
         //]]>
