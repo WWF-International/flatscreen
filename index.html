@@ -24,7 +24,7 @@
 
         <link rel="stylesheet" type="text/css" media="all" href="flatscreen.css" />
 
-        <link  rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600|Source+Code+Pro:400' />
+        <link  rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600|Source+Code+Pro:400" />
 
         <!--
             Modernizr
@@ -57,6 +57,10 @@
 
             h1 + p b {
                 font-size: 1.25em;
+            }
+
+            .indented {
+                padding-left: 2.5em;
             }
 
             sup {
@@ -132,13 +136,18 @@
             .cf {
                 *zoom: 1;
             }
+
+            .flatscreen {
+                padding-top: 14.0625%;
+                width: 25%;
+            }
         </style>
     </head>
     <body>
         <h1>Flatscreen</h1>
         <p><b>A lighter, flatter, and responsive way of embedding YouTube videos.</b></p>
 
-        <p>Flatscreen only loads the YouTube <code>iframe</code> once a visitor has clicked on the thumbnail, speeding up the page's inital load time. Good for single or multiple videos on the same page.</p>
+        <p>Flatscreen only loads the YouTube <code>iframe</code> once a visitor has clicked on the thumbnail, speeding up the page&rsquo;s inital load time. Good for single or multiple videos on the same page.</p>
 
         <h2>Demo</h2>
         <section class="cf">
@@ -151,14 +160,19 @@
         <h2>You will also need</h2>
         <ul>
             <li><a href="http://modernizr.com">Modernizr</a> - with the CSS animations test.</li>
-            <li><a href="http://lesscss.org/">LESS</a> - to compile the <code>flatscreen.less</code> to <code>flatscreen.css</code></li>
+            <li><i>(Optional)</i> <a href="http://lesscss.org/">LESS</a> - to compile the <code>flatscreen.less</code> to <code>flatscreen.css</code></li>
         </ul>
 
         <h2>How to use</h2>
+        <p>Add the <code>flatscreen.css</code> code to your CSS; or <code>&lt;link&gt;</code> to the file.</p>
+
+        <p class="indented"><i>(Optional)</i> Override or alter the <code>.flatscreen</code> selector to your chosen dimensions. It&rsquo;s a flexible width container that uses padding to keep the aspect ratio correct - <a href="http://alistapart.com/article/creating-intrinsic-ratios-for-video">more information on the how and why</a>.</p>
+
         <p>Include the minified flatscreen.js just before the <code>&lt;/body&gt;</code> tag.</p>
         <pre><code>&lt;script src="flatscreen.min.js"&gt;&lt;/script&gt;</code>.</pre>
         <p>After the flatscreen.js script tag, add (without the comments):</p>
-<pre class="language-javascript"><code>&lt;script&gt; //&lt;![CDATA[
+<pre class="language-javascript"><code>&lt;script&gt;
+//&lt;![CDATA[
     (function(){
 
         <span>// See YouTube JS API to see what can be styled.
@@ -200,13 +214,14 @@
         );
 
     })();
-//]]&gt; &lt;/script&gt;</code></pre>
+//]]&gt;
+&lt;/script&gt;</code></pre>
         <p>Add an element with the class of <code>flatscreen</code> and the YouTube ID in the <code>id</code>, and everything (should be) taken care of.</p>
         <pre><code>&lt;div class="flatscreen" id="GaAgtwbZV_E"&gt;&lt;/div&gt;</code></pre>
 
         <h2>Google Analytics event tracking</h2>
 
-        <p>This requires Google Analytics to be separately included before <code>runFlatscreen()</code> on the page. If GA isn't included and <code>gaEvents</code> is set to true, it won't break - it just won't track anything.</p>
+        <p>This requires Google Analytics to be separately included before <code>runFlatscreen()</code> on the page. If GA isn&rsquo;t included and <code>gaEvents</code> is set to true, it won&rsquo;t break - it just won&rsquo;t track anything.</p>
 
         <p>The event that is fired is:</p>
             <dl>
@@ -218,7 +233,7 @@
                     <ul>
                         <li><i>ready for playback</i> - flatscreen.js has run successfully and is ready</li>
                         <li><i>thumbnail triggered</i> - the thumbnail has been clicked</li>
-                        <li><i>unstarted</i> - video has loaded and is waiting to play; this shouldn't be seen, as flatscreen.js automatically start the video</li>
+                        <li><i>unstarted</i> - video has loaded and is waiting to play; this shouldn&rsquo;t be seen, as flatscreen.js automatically start the video</li>
                         <li><i>playing</i> - the video has started playing</li>
                         <li><i>paused</i> - the video has been paused</li>
                         <li><i>buffering</i> - the video is buffering</li>
@@ -236,10 +251,10 @@
         <ul>
             <li>Loading thumbnails suited for the video size - larger thumbnails get larger images</li>
             <li>Add in a check to see if the YouTube JavaScript has already been loaded</li>
-            <li><strike>Figure out why it doesn't work in Internet Explorer 8</strike></li>
+            <li><strike>Figure out why it doesn&rsquo;t work in Internet Explorer 8</strike></li>
             <li><strike>Firing a Google Analytics events on thumbnail click, video load, video play, video pause, etc</strike></li>
             <li><strike>Custom thumbnails can be set for each video individually.</strike></li>
-            <li>Figure out why it doesn't work in Internet Explorer 7(?)</li>
+            <li>Figure out why it doesn&rsquo;t work in Internet Explorer 7(?)</li>
         </ul>
 
         <h2>Tested in:</h2>

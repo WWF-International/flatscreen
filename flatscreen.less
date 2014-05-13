@@ -2,12 +2,19 @@
 // include these near the start - they shouldn't appear in the processed CSS.
 // -----------------------------------------------------------------------------
 @import 'style/variables-and-mixins.less';
-
+.animation(spin 1s steps(8, end) infinite);
+.background-size(contain);
+.box-sizing();
+.border-radius();
+.transition();
+.transform( rotate(45deg) );
 // -----------------------------------------------------------------------------
 // Styles specific to flatscreen
 // -----------------------------------------------------------------------------
 .flatscreen {
-    @width: 25%;
+    @width: 100%; // change this to change the width of the video.
+    // See http://alistapart.com/article/creating-intrinsic-ratios-for-video for
+    // the how.
 
     float: left;
     height: 0;

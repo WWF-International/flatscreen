@@ -15,9 +15,9 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
     // If no player parameters have been passed over, then these defaults will
     // be used
-    if ( youtubeParameters === undefined || youtubeParameters == ' ' || youtubeParameters === null || isObjectEmpty(youtubeParameters) == true ) {
+    if ( typeof youtubeParameters === 'undefined' || youtubeParameters == ' ' || youtubeParameters === null || isObjectEmpty(youtubeParameters) == true ) {
         var youtubeParameters = {
-                autohide: 1, // 3 is a hidden perameter which hides the controls, but keeps the progress bar.
+                autohide: 3, // 3 is a hidden perameter which hides the controls, but keeps the progress bar.
                 color: 'white',
                 controls: 1,
                 disablekb: 0,
