@@ -1,11 +1,22 @@
-function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
+
+/*! Flatscreen.js
+----------------------------------------------------------------------------- */
+
+function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
     var ytTag = document.createElement('script'),
         firstScriptTag = document.getElementsByTagName('script')[0],
         loadingTag = document.createElement('div'),
         player,
         screenSize,
-        gaEventsArray = ['_trackEvent', 'Videos'];
+        gaEventsArray = ['_trackEvent', 'Videos'],
+        gaEvents = gaEvents;
+
+    // If gaEvents is set to true, but GA isn't there - then we need to reset
+    // gaEvents to false
+    if ( typeof _gaq == undefined ) {
+        var gaEvents = false;
+    }
 
     // Setting the class of the loading screen element
     loadingTag.className = 'loading-screen';
@@ -15,7 +26,7 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
     // If no player parameters have been passed over, then these defaults will
     // be used
-    if ( typeof youtubeParameters === 'undefined' || youtubeParameters == ' ' || youtubeParameters === null || isObjectEmpty(youtubeParameters) == true ) {
+    if ( typeof youtubeParameters === undefined || youtubeParameters == ' ' || youtubeParameters === null || isObjectEmpty(youtubeParameters) == true ) {
         var youtubeParameters = {
                 autohide: 3, // 3 is a hidden perameter which hides the controls, but keeps the progress bar.
                 color: 'white',
@@ -45,11 +56,7 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     firstScriptTag.parentNode.insertBefore(ytTag, firstScriptTag);
 
 
-    // If gaEvents is set to true, but GA isn't there - then we need to reset
-    // gaEvents to false
-    if ( gaEvents === true && typeof _gaq === 'undefined' ) {
-        var gaEvents = false;
-    }
+
 
     // -------------------------------------------------------------------------
     // Check to see if an object is empty
@@ -79,8 +86,10 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     // Return an array for the GA events tracking, and fire the event
     // -------------------------------------------------------------------------
     function gaEvent(action, ytID) {
-        var arr = gaEventsArray.concat(action, 'YouTube ID: ' + ytID);
-        _gaq.push( arr );
+        if ( gaEvents === true ) {
+            var arr = gaEventsArray.concat(action, 'YouTube ID: ' + ytID);
+            _gaq.push( arr );
+        }
     }
 
 
@@ -157,7 +166,7 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
         // Need to check if there are actually any .flatscreen elements. If not,
         // then this will stop flatscreen.js from going any further.
-        if ( screens == 0 || screens === undefined || screens === null ) {
+        if ( screens == 0 || typeof screens === undefined || screens === null ) {
             return false;
         }
 
@@ -169,7 +178,7 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
             // If the thumbnails have been set, the use them
             // -----------------------------------------------------------------
-            if ( alternativeThumbnails[ytID] !== undefined ) {
+            if ( typeof alternativeThumbnails === undefined ) {
                 // console.log('alternative thumbnail - ' + alternativeThumbnails[ytID]);
 
                 var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="' + alternativeThumbnails[ytID] + '" /></div>',
@@ -180,8 +189,8 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
             //
             // -----------------------------------------------------------------
             else {
-                var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/maxresdefault.jpg" /></div>',
-                loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/maxresdefault.jpg" /></div>';
+                var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" /></div>',
+                loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/hqdefault.jpg" /></div>';
                 // console.log(screens[i].id);
             }
 
@@ -264,8 +273,8 @@ function runFlatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
             }
         });
         // console.log(player);
-        // console.log(ytID + '-wrapper');
-    }
+        // console.log(ytID + '-wrapper')
+ }
 
 
     function steadyGo(event) {
