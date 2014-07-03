@@ -2,12 +2,7 @@
 // include these near the start - they shouldn't appear in the processed CSS.
 // -----------------------------------------------------------------------------
 @import 'style/variables-and-mixins.less';
-.animation(spin 1s steps(8, end) infinite);
-.background-size(contain);
-.box-sizing();
-.border-radius();
-.transition();
-.transform( rotate(45deg) );
+
 // -----------------------------------------------------------------------------
 // Styles specific to flatscreen
 // -----------------------------------------------------------------------------
@@ -92,7 +87,7 @@
         }
 
         &:after {
-        border-color: transparent transparent transparent #fff;
+            border-color: transparent transparent transparent #fff;
         }
     }
 }
