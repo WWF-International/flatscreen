@@ -172,6 +172,11 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
         }
 
         // console.log(screens);
+	    
+	    // if alternativeThumnails doesn't exist, create an empty object.
+	    if ( typeof alternativeThumbnails === 'undefined' ) {
+	    	alternativeThumbnails = {};
+	    }
 
         for (var i = screens.length - 1; i >= 0; i--) {
             var ytID = screens[i].id,
