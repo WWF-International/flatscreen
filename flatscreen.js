@@ -3,20 +3,19 @@
 ----------------------------------------------------------------------------- */
 
 function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
-	//"use strict";
+	"use strict";
 
     var ytTag = document.createElement('script'),
         firstScriptTag = document.getElementsByTagName('script')[0],
         loadingTag = document.createElement('div'),
         player,
         screenSize,
-        gaEventsArray = ['_trackEvent', 'Videos'],
-        gaEvents = gaEvents;
+        gaEventsArray = ['_trackEvent', 'Videos'];
 
     // If gaEvents is set to true, but GA isn't there - then we need to reset
     // gaEvents to false
     if ( typeof _gaq === 'undefined' ) {
-        var gaEvents = false;
+         gaEvents = false;
     }
 
     // Setting the class of the loading screen element
@@ -28,7 +27,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     // If no player parameters have been passed over, then these defaults will
     // be used
     if ( typeof youtubeParameters === 'undefined' || youtubeParameters == ' ' || youtubeParameters === null || isObjectEmpty(youtubeParameters) === true ) {
-        var youtubeParameters = {
+         youtubeParameters = {
                 autohide: 3, // 3 is a hidden perameter which hides the controls, but keeps the progress bar.
                 color: 'white',
                 controls: 1,
@@ -37,7 +36,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
                 showinfo: 0,
                 theme: 'light'
             };
-    };
+    }
 
     // To ensure that the iframe honours other element's z-index, wmode is set
     // to transparent.
@@ -76,6 +75,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     // Remove elements function
     // -------------------------------------------------------------------------
     function removeElement(targets) {
+        var target;
         for (var i = targets.length - 1; i >= 0; i--) {
             target = document.getElementById(targets[i]);
             target.parentNode.removeChild(target);
@@ -121,7 +121,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
         else if ( data === 5 ) {
             gaEvent('video cued', ytID);
-        };
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -152,8 +152,8 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
         else {
             // IE7, I will set Liam Neeson on you.
-            var screens = [],
-                classname = 'flatscreen',
+            screens = [];
+            var classname = 'flatscreen',
                 getEverything = document.getElementsByTagName('*');
 
             var classnameRegex = new RegExp('(^|\\s)' + classname + '(\\s|$)');
@@ -167,7 +167,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
         // Need to check if there are actually any .flatscreen elements. If not,
         // then this will stop flatscreen.js from going any further.
-        if ( screens == 0 || typeof screens === 'undefined' || screens === null ) {
+        if ( screens === 0 || typeof screens === 'undefined' || screens === null ) {
             return false;
         }
 
@@ -184,10 +184,13 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
             // Use the alternative thumbnails if an object is present
             // -----------------------------------------------------------------
+            var invisibleButton;
+            var loadingScreen;
+
             if ( typeof alternativeThumbnails[ytID] === 'string' ) {
                 // console.log('alternative thumbnail - ' + alternativeThumbnails[ytID]);
 
-                var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="' + alternativeThumbnails[ytID] + '" /></div>',
+                invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="' + alternativeThumbnails[ytID] + '" /></div>',
                 loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="' + alternativeThumbnails[ytID] + '" /></div>';
                 // console.log(screens[i].id);
             }
@@ -196,7 +199,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
             // If the thumbnails haven't been set, then use the YT thumbnails
             // -----------------------------------------------------------------
             else {
-                var invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" /></div>',
+                invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" /></div>',
                 loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/hqdefault.jpg" /></div>';
                 // console.log(screens[i].id);
             }
@@ -237,9 +240,9 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
                 function(){
                     // IE8 needs this wrapped in another function to prevent it #
                     // automatically being triggered
-                    createLoadingScreen(target)
+                    createLoadingScreen(target);
                 }
-            )
+            );
         }
 
         if ( gaEvents === true ) {
@@ -256,10 +259,10 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
         if ( gaEvents === true ) {
             gaEvent('thumbnail triggered', ytID);
-        };
+        }
 
         // console.log('createLoadingScreen');
-        removeables = [ ytID + '-invisible-button' ];
+        var removeables = [ ytID + '-invisible-button' ];
         removeElement( removeables );
 
         document.getElementById( ytID + '-loading').style.display = 'block';
@@ -304,7 +307,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
             var ytID = event.target.a.id.match( '(.{11})(?:-wrapper)' )[1];
 
             gaEventsTrigger(ytID, event.data);
-        };
+        }
     }
 
     findYTelements();
