@@ -3,7 +3,7 @@
 ----------------------------------------------------------------------------- */
 
 function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
-	"use strict";
+    "use strict";
 
     var ytTag = document.createElement('script'),
         firstScriptTag = document.getElementsByTagName('script')[0],
@@ -172,11 +172,11 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
         }
 
         // console.log(screens);
-	    
-	    // if alternativeThumnails doesn't exist, create an empty object.
-	    if ( typeof alternativeThumbnails === 'undefined' ) {
-	    	alternativeThumbnails = {};
-	    }
+
+        // if alternativeThumnails doesn't exist, create an empty object.
+        if ( typeof alternativeThumbnails === 'undefined' ) {
+            alternativeThumbnails = {};
+        }
 
         for (var i = screens.length - 1; i >= 0; i--) {
             var ytID = screens[i].id,
@@ -200,7 +200,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
             // -----------------------------------------------------------------
             else {
                 invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" /></div>',
-                loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/hqdefault.jpg" /></div>';
+                loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" /></div>';
                 // console.log(screens[i].id);
             }
 
@@ -290,8 +290,9 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
     function steadyGo(event) {
         // console.log('steadyGo');
+        // console.dir(event);
         // get the YouTube ID from ID-wrapper event passed over
-        var ytID = event.target.a.id.match( '(.{11})(?:-wrapper)' )[1],
+        var ytID = event.target.d.id.match( '(.{11})(?:-wrapper)' )[1],
             removeables = [ ytID + '-loading' ];
 
         removeElement( removeables );
