@@ -292,7 +292,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
         // console.log('steadyGo');
         // console.dir(event);
         // get the YouTube ID from ID-wrapper event passed over
-        var ytID = event.target.d.id.match( '(.{11})(?:-wrapper)' )[1],
+        var ytID = event.target.c.id.match( '(.{11})(?:-wrapper)' )[1],
             removeables = [ ytID + '-loading' ];
 
         removeElement( removeables );
@@ -305,7 +305,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     function stateChange(event) {
         // console.log('stateChange');
         if ( gaEvents === true ) {
-            var ytID = event.target.a.id.match( '(.{11})(?:-wrapper)' )[1];
+            var ytID = event.target.c.id.match( '(.{11})(?:-wrapper)' )[1];
 
             gaEventsTrigger(ytID, event.data);
         }
