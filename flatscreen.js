@@ -279,8 +279,12 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
             videoId: ytID,
             playerVars : youtubeParameters,
             events: {
-                'onReady': steadyGo,
-                'onStateChange' : stateChange
+                onReady: function(e){
+                    steadyGo(e, ytID) // pass over ytID to remove reliance on the e parameters shifting and breaking flatscreen.
+                },
+                onStateChange : function(e){
+                    stateChange(e)
+                }
             }
         });
         // console.log(player);
@@ -288,12 +292,15 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
  }
 
 
-    function steadyGo(event) {
+    function steadyGo(event, ytID) {
         // console.log('steadyGo');
         // console.dir(event);
-        // get the YouTube ID from ID-wrapper event passed over
-        var ytID = event.target.c.id.match( '(.{11})(?:-wrapper)' )[1],
-            removeables = [ ytID + '-loading' ];
+        
+        // REMOVED: get the YouTube ID from ID-wrapper event passed over;
+        // this kept breaking - the 'f' would change to another letter every couple of months
+        // var event.target.f.id.match( '(.{11})(?:-wrapper)' )[1], //
+        
+        var removeables = [ ytID + '-loading' ];
 
         removeElement( removeables );
 
@@ -305,12 +312,11 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     function stateChange(event) {
         // console.log('stateChange');
         if ( gaEvents === true ) {
-            var ytID = event.target.c.id.match( '(.{11})(?:-wrapper)' )[1];
+            var ytID = event.target.f.id.match( '(.{11})(?:-wrapper)' )[1];
 
             gaEventsTrigger(ytID, event.data);
         }
     }
 
     findYTelements();
-
 }
