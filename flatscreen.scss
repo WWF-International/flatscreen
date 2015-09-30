@@ -1,22 +1,22 @@
 // -----------------------------------------------------------------------------
 // include these near the start - they shouldn't appear in the processed CSS.
 // -----------------------------------------------------------------------------
-@import 'style/_variables-and-mixins.less';
+@import 'style/_variables-and-mixins.scss';
 
 // -----------------------------------------------------------------------------
 // Styles specific to flatscreen
 // -----------------------------------------------------------------------------
 .flatscreen {
-    @width: 100%; // change this to change the width of the video.
+    $width: 100%; // change this to change the width of the video.
     // See http://alistapart.com/article/creating-intrinsic-ratios-for-video for
     // the how.
 
     float: left;
     height: 0;
     overflow: hidden;
-    padding: ((@width / 16) * 9) 0 1px 0;
+    padding: (($width / 16) * 9) 0 1px 0;
     position: relative;
-    width: @width;
+    width: $width;
     z-index: 100;
 
     img {
@@ -29,7 +29,7 @@
 .flatscreen-wrapper,
 .loading-screen {
     bottom: 0;
-    .box-sizing(border-box);
+    @include box-sizing(border-box);
     position: absolute;
     left: 0;
     right: 0;
@@ -56,14 +56,14 @@
         position: absolute;
         top: 50%;
         z-index: 2500 !important;
-        .transition( all 100ms ease-in-out );
+        @include transition( all 100ms ease-in-out );
     }
 
     &:before {
-        background: @black;
-        background: fade(@black, 75);
-        .border-radius(1em);
-        .box-sizing(border-box);
+        background: $black;
+        background: rgba($black, 0.75);
+        @include border-radius(1em);
+        @include box-sizing(border-box);
         font-size: 4em; /* change this to change everything else */
         margin: -0.5em 0 0 -0.5em;
         height: 1em;
@@ -72,8 +72,8 @@
 
     &:after {
         border-style: solid;
-        border-color: transparent transparent transparent @grey-light;
-        border-color: transparent transparent transparent fade(@white, 75);
+        border-color: transparent transparent transparent $grey-light;
+        border-color: transparent transparent transparent rgba($white, 0.75);
         border-width: 1em 0 1em 1.732em; /* equilateral triangle ratios */
         margin: -1em 0 0 -0.55em;
         height: 0;
@@ -83,7 +83,7 @@
     &:hover {
 
         &:before {
-            background: fade(@black, 99);
+            background: rgba($black, 0.99);
         }
 
         &:after {
@@ -100,8 +100,8 @@
 }
 
 .loading-spinner {
-    .animation(spin 1s steps(8, end) infinite);
-    .background-size(contain);
+    @include animation(spin 1s steps(8, end) infinite);
+    @include background-size(contain);
     font-size: 0.9em;
     height: 2em;
     left: 50%;
@@ -115,12 +115,12 @@
         height: 2em;
         position: absolute;
         top: 0;
-        .transform( rotate(45deg) );
+        @include transform( rotate(45deg) );
         width: 2em;
 
         &:after {
-            .border-radius(0.5em);
-            background-color: @darkgrey;
+            @include border-radius(0.5em);
+            background-color: $darkgrey;
             content: '';
             height: 0.5em;
             left: 50%;
@@ -130,53 +130,47 @@
             top: 0;
         }
 
+        // number of circles in the loading spinner
+        $circles: 8;
+
         // a loop for creating nth-child(x)
-        .nth-child-loop(@i) when (@i > 0) {
-
-            &:nth-child(@{i}) {
-                .transform( rotate( (45deg * @i) ) );
+        @for $i from 1 through $circles {
+            &:nth-child(#{$i}) {
+                @include transform( rotate((45deg * $i)) );
+                &::after {
+                    background-color: rgba($darkergrey, ( $i * (1/8)) );
+                }
             }
-
-            &:nth-child(@{i}):after {
-               background-color: lighten(@darkergrey, ( @i * 10) );
-
-            }
-
-            .nth-child-loop(@i - 1);
         }
 
-        // number of circles in the loading spinner
-        @circles: 8;
-        // use the mixin with the number of circles
-        .nth-child-loop(@circles);
 
     }
 }
 
-.spin-keyframes {
+@mixin spin-keyframes() {
     0% {
-        .transform( rotate(0deg) );
+        @include transform( rotate(0deg) );
     }
 
     100% {
-        .transform( rotate(360deg) ;)
+        @include transform( rotate(360deg) );
     }
 }
 
     @-moz-keyframes spin {
-        .spin-keyframes;
+        @include spin-keyframes();
     }
     @-ms-keyframes spin {
-        .spin-keyframes;
+        @include spin-keyframes();
     }
     @-o-keyframes spin {
-        .spin-keyframes;
+        @include spin-keyframes();
     }
     @-webkit-keyframes spin {
-        .spin-keyframes;
+        @include spin-keyframes();
     }
 @keyframes spin {
-    .spin-keyframes;
+    @include spin-keyframes();
 }
 
 .no-cssanimations {
