@@ -312,7 +312,7 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     function stateChange(event) {
         // console.log('stateChange');
         if ( gaEvents === true ) {
-            var ytID = event.target.f.id.match( '(.{11})(?:-wrapper)' )[1];
+            var ytID = event.target.a.id.match( '(.{11})(?:-wrapper)' )[1]; // FIX THIS - "a" is undocumented, so will likely break in the future.
 
             gaEventsTrigger(ytID, event.data);
         }
