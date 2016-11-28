@@ -191,10 +191,10 @@
 
         <h2>Demo</h2>
         <section class="cf">
-            <div class="flatscreen" id="lkdvzIheuJ8"></div>
-            <div class="flatscreen" id="ja88JM3cfmQ"></div>
-            <div class="flatscreen" id="GaAgtwbZV_E"></div>
-            <div class="flatscreen" id="dQw4w9WgXcQ"></div>
+            <div class="js-flatscreen flatscreen" id="lkdvzIheuJ8"></div>
+            <div class="js-flatscreen flatscreen" id="ja88JM3cfmQ"></div>
+            <div class="js-flatscreen flatscreen" id="GaAgtwbZV_E"></div>
+            <div class="js-flatscreen flatscreen" id="dQw4w9WgXcQ"></div>
         </section>
 
         <h2>You will also need</h2>
@@ -256,8 +256,11 @@
     })();
 //]]&gt;
 &lt;/script&gt;</code></pre>
-        <p>Add an element with the class of <code>flatscreen</code> and the YouTube ID in the <code>id</code>, and everything (should be) taken care of.</p>
-        <pre><code>&lt;div class="flatscreen" id="GaAgtwbZV_E"&gt;&lt;/div&gt;</code></pre>
+        <p>Add an element with the class of <code>js-flatscreen</code> and the YouTube ID in the <code>id</code>, and everything (should be) taken care of.</p>
+        <pre><code>&lt;div class="js-flatscreen" id="GaAgtwbZV_E"&gt;&lt;/div&gt;</code></pre>
+
+        <p>Flatscreen will add the <code>flatscreen</code> class automatically, but can be hardcoded in.</p>
+        <pre><code>&lt;div class="js-flatscreen flatscreen" id="GaAgtwbZV_E"&gt;&lt;/div&gt;</code></pre>
 
         <h2>Google Analytics event tracking</h2>
 

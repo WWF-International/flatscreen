@@ -1,27 +1,24 @@
 
 /*! Flatscreen.js
+//  https://github.com/WWF-International/flatscreen
 ----------------------------------------------------------------------------- */
 
-function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
+var flatscreen = function(youtubeParameters, gaEvents, alternativeThumbnails) {
     "use strict";
 
     var ytTag = document.createElement('script'),
         firstScriptTag = document.getElementsByTagName('script')[0],
         loadingTag = document.createElement('div'),
-        player,
-        screenSize,
-        gaEventsArray = ['_trackEvent', 'Videos'];
+        player;
 
-    // If gaEvents is set to true, but GA isn't there - then we need to reset
-    // gaEvents to false
-    if ( typeof _gaq === 'undefined' ) {
-         gaEvents = false;
+    if ( gaEvents === 'undefined' ) {
+        var gaEvents = false;
     }
 
     // Setting the class of the loading screen element
     loadingTag.className = 'loading-screen';
 
-    // Setting the source of the ytTag <script>
+    // Setting the source of the ytTag script
     ytTag.src = 'https://www.youtube.com/iframe_api';
 
     // If no player parameters have been passed over, then these defaults will
@@ -52,10 +49,8 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     youtubeParameters.rel = 0;
 
 
-    // Add the YouTube script tag before the first <script> tag
+    // Add the YouTube script tag before the first script tag
     firstScriptTag.parentNode.insertBefore(ytTag, firstScriptTag);
-
-
 
 
     // -------------------------------------------------------------------------
@@ -88,8 +83,21 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     // -------------------------------------------------------------------------
     function gaEvent(action, ytID) {
         if ( gaEvents === true ) {
-            var arr = gaEventsArray.concat(action, 'YouTube ID: ' + ytID);
-            _gaq.push( arr );
+            var eventCategory = 'Videos';
+            var eventAction = action;
+            var eventLabel = 'YouTube ID: ' + ytID;
+
+            // Universal Analytics - analytics.js
+            // https://developers.google.com/analytics/devguides/collection/analyticsjs/events#implementation
+            if (typeof ga !== 'undefined') {
+                ga('send', 'event', eventCategory, eventAction, eventLabel);
+            }
+
+            // Old Google Analytics - ga.js
+            // https://developers.google.com/analytics/devguides/collection/gajs/methods/gaJSApiEventTracking
+            if (typeof _gaq !== 'undefined') {
+                _gaq.push( ['_trackEvent', eventCategory, eventAction, eventLabel] );
+            }
         }
     }
 
@@ -143,17 +151,17 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
         if ( document.getElementsByClassName ) {
             // Huzzah, a normal way of getting class names.
-            screens = document.getElementsByClassName('flatscreen');
+            screens = document.getElementsByClassName('js-flatscreen');
         }
         else if ( document.querySelectorAll ) {
             // Oh. Ah well, at least it works in IE8
-            screens = document.querySelectorAll('.flatscreen');
+            screens = document.querySelectorAll('.js-flatscreen');
         }
 
         else {
             // IE7, I will set Liam Neeson on you.
             screens = [];
-            var classname = 'flatscreen',
+            var classname = 'js-flatscreen',
                 getEverything = document.getElementsByTagName('*');
 
             var classnameRegex = new RegExp('(^|\\s)' + classname + '(\\s|$)');
@@ -180,17 +188,27 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
 
         for (var i = screens.length - 1; i >= 0; i--) {
             var ytID = screens[i].id,
-                wrapper = '<div id="' + ytID + '-wrapper" class="flatscreen-wrapper"></div>';
+                wrapper = '<div id="' + ytID + '-wrapper" class="flatscreen-wrapper"></div>',
+                classes = screens[i].className;
+
+            // Add the flatscreen class to style the screens[i] element, if not
+            // already present.
+            // -----------------------------------------------------------------
+            if ( !classes.match(/(?: |^)flatscreen/g) ) {
+              screens[i].className = classes + ' flatscreen';
+            }
 
             // Use the alternative thumbnails if an object is present
             // -----------------------------------------------------------------
             var invisibleButton;
             var loadingScreen;
+            var thumbnail;
 
             if ( typeof alternativeThumbnails[ytID] === 'string' ) {
                 // console.log('alternative thumbnail - ' + alternativeThumbnails[ytID]);
 
-                invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="' + alternativeThumbnails[ytID] + '" /></div>',
+                thumbnail = '<img src="' + alternativeThumbnails[ytID] + '" />';
+                invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button">' + thumbnail + '</div>';
                 loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="' + alternativeThumbnails[ytID] + '" /></div>';
                 // console.log(screens[i].id);
             }
@@ -199,7 +217,8 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
             // If the thumbnails haven't been set, then use the YT thumbnails
             // -----------------------------------------------------------------
             else {
-                invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button"><img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" /></div>',
+                thumbnail = '<img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" />';
+                invisibleButton = '<div title="Click to play" class="invisible-button" id="' + ytID + '-invisible-button">' + thumbnail + '</div>';
                 loadingScreen = '<div class="loading-screen" id="' + ytID + '-loading"><div class="loading-spinner" id="' + ytID + '-spinner"><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span><span class="circles"></span></div><img src="//i1.ytimg.com/vi/' + ytID + '/mqdefault.jpg" /></div>';
                 // console.log(screens[i].id);
             }
@@ -235,15 +254,15 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
                 // console.log('addEventListener fired');
             });
         }
-        else if ( elInvisibleButton.attachEvent ) {
-            elInvisibleButton.attachEvent('onclick',
-                function(){
-                    // IE8 needs this wrapped in another function to prevent it #
-                    // automatically being triggered
-                    createLoadingScreen(target);
-                }
-            );
-        }
+        // else if ( elInvisibleButton.attachEvent ) {
+        //     elInvisibleButton.attachEvent('onclick',
+        //         function(){
+        //             // IE8 needs this wrapped in another function to prevent it #
+        //             // automatically being triggered
+        //             createLoadingScreen(target);
+        //         }
+        //     );
+        // }
 
         if ( gaEvents === true ) {
             gaEvent('ready for playback', target);
@@ -295,11 +314,11 @@ function flatscreen(youtubeParameters, gaEvents, alternativeThumbnails){
     function steadyGo(event, ytID) {
         // console.log('steadyGo');
         // console.dir(event);
-        
+
         // REMOVED: get the YouTube ID from ID-wrapper event passed over;
         // this kept breaking - the 'f' would change to another letter every couple of months
         // var event.target.f.id.match( '(.{11})(?:-wrapper)' )[1], //
-        
+
         var removeables = [ ytID + '-loading' ];
 
         removeElement( removeables );
